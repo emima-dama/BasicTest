@@ -34,10 +34,11 @@ public class QuestionBank implements QuestionFinder{
      */
     public QuestionBank(){
         
+        questions = new ArrayList<Question>();
+        
         this.loadMultipleChoiceQuestions();
         this.loadTrueFalseQuestions();
         
-        //I'm not sure if that means "prints a message in the form"
         System.out.print("Loaded all "+this.getLenght()+" questions from the question bank.");
     }
     
@@ -51,6 +52,12 @@ public class QuestionBank implements QuestionFinder{
         return this.questions.get(index);
     }
     
+    //A function that isn't in UML diagram, but I need it for random selection
+    public ArrayList<Question> getQuestions(){
+        
+        return this.questions;
+    }
+    
     public void loadMultipleChoiceQuestions(){
         
         try(BufferedReader br = new BufferedReader(new FileReader(this.MULTIPLE_CHOICE_FILE))){
@@ -59,7 +66,7 @@ public class QuestionBank implements QuestionFinder{
             while(line != null){ // loop until all lines are read
                 
                 String [] fields = line.split(",");
-                if(fields.length != 8)
+                if(fields.length != this.MULTIPLE_CHOICE_FIELDS)
                     throw new IOException("On current line number of fields is not 8 as is necessary");
                 
                 //convert fields to correct type:
@@ -114,7 +121,7 @@ public class QuestionBank implements QuestionFinder{
             while(line != null){ // loop until all lines are read
                 
                 String [] fields = line.split(",");
-                if(fields.length != 4)
+                if(fields.length != this.TRUE_FALSE_FIELDS)
                     throw new IOException("On current line number of fields is not 4 as is necessary");
                 
                 //convert "cn" variable to int
