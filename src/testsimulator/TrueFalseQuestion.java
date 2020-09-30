@@ -10,7 +10,7 @@ public class TrueFalseQuestion extends Question {
     /**
      * Fields of class
      */
-    private boolean correctAnswer; // TRUE / FALSE
+    private boolean correctAnswer;
     private boolean chosenAnswer;
     
     /**

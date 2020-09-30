@@ -6,6 +6,11 @@
 package testsimulator;
 
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 
 public class TestSimulator {
@@ -44,13 +49,25 @@ public class TestSimulator {
      */
     public static void main(String[] args) {
         
+        QuestionBank qb = new QuestionBank();
+        
         while(true){
             
             int selection = getSelection();
             if(selection == 3)
                 break;
-            
+                     
             System.out.print("Your selection is "+selection);
+            
+            if(selection == 1){
+                //create a Test
+                Test test = new Test(5,qb);
+                if(test.runTest()){
+                    test.showTestSummary();
+                    test.saveTestResult();
+                }
+                
+            }
         }
     }
     
