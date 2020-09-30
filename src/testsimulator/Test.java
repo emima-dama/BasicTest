@@ -7,19 +7,15 @@ package testsimulator;
 
 import java.util.ArrayList;
 
-/**
- *
- * @author Damaris
- */
 public class Test implements QuestionFinder{
     
     /**
-     * Attributes of class
+     * Fields of class
      */
     private ArrayList<Question> questions;
  
     /**
-     * Functions of class
+     * Methods of class
      */
     
     /**
@@ -59,7 +55,12 @@ public class Test implements QuestionFinder{
 
     @Override
     public boolean containsQuestion(String questionID, ArrayList<Question> questions) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        for(Question q:questions){
+            if(q.getQuestionID().equals(questionID))
+                return true;
+        }
+        return false;
     }
 }
 

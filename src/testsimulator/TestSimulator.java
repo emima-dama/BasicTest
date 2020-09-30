@@ -8,10 +8,6 @@ package testsimulator;
 import java.io.InputStreamReader;
 import java.util.Scanner;
 
-/**
- *
- * @author Damaris
- */
 public class TestSimulator {
 
     public static int getSelection(){

@@ -5,14 +5,10 @@
  */
 package testsimulator;
 
-/**
- *
- * @author Damaris
- */
 public class TestSummary {
     
     /**
-     * Attributes of class
+     * Fields of class
      */
     public static String FILENAME_SUMMARY = "test-summary.txt";
     private int TEST_REPORT_FIELDS = 4;
@@ -20,7 +16,7 @@ public class TestSummary {
     private int[] chapterQuestionsCorrect = new int[8];
  
     /**
-     * Functions of class
+     * Methods of class
      */
     
     /**

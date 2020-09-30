@@ -5,28 +5,23 @@
  */
 package testsimulator;
 
-/**
- *
- * @author Damaris
- */
-public class MulipleChoiceQuestion extends Question {
+public class MultipleChoiceQuestion extends Question {
     
     /**
-     * Attributes of class
+     * Fields of class
      */
-    private String[] answers = new String[4];
-    private char correctAnswer;
-    private char chosenAnswer;
-
+    private String[] answers = new String[4];  
+    private char correctAnswer; // a/b/c/d
+    private char chosenAnswer;  
     
     /**
-     * Functions of class
+     * Methods of class
      */
     
     /**
      * Constructor 
      */
-    public MulipleChoiceQuestion(String questionID, int chapterNumber, String questionText, String answer1, String answer2, String answer3, String answer4, char correctAnswer) {
+    public MultipleChoiceQuestion(String questionID, int chapterNumber, String questionText, String answer1, String answer2, String answer3, String answer4, char correctAnswer) {
         
         super(questionID, chapterNumber, questionText);
         
@@ -36,12 +31,12 @@ public class MulipleChoiceQuestion extends Question {
         this.answers[3] = answer4;
         
         this.correctAnswer = correctAnswer;
+        this.chosenAnswer = 'a'; //default value
     }
 
     @Override
     boolean isAnswerCorrect() {
         
-        //I'm not sure ( TODO )
         return this.chosenAnswer == this.correctAnswer;
     }
     

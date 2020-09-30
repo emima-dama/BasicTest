@@ -7,10 +7,6 @@ package testsimulator;
 
 import java.util.ArrayList;
 
-/**
- *
- * @author Damaris
- */
 public interface QuestionFinder {
     
     boolean containsQuestion(String questionID, ArrayList<Question> questions);

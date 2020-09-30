@@ -5,20 +5,16 @@
  */
 package testsimulator;
 
-/**
- *
- * @author Damaris
- */
 public class TrueFalseQuestion extends Question {
 
     /**
-     * Attributes of class
+     * Fields of class
      */
-    private boolean correctAnswer;
+    private boolean correctAnswer; // TRUE / FALSE
     private boolean chosenAnswer;
     
     /**
-     * Functions of class
+     * Methods of class
      */
     
     /**
@@ -29,12 +25,12 @@ public class TrueFalseQuestion extends Question {
         
         super(questionID, chapterNumber, questionText);
         this.correctAnswer = correctAnswer;
+        this.chosenAnswer = true; //default value
     }
   
     @Override
     public boolean isAnswerCorrect() {
         
-        //I'm not sure ( TODO )
         return this.chosenAnswer == this.correctAnswer;
     }
   

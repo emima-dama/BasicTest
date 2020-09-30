@@ -5,21 +5,17 @@
  */
 package testsimulator;
 
-/**
- *
- * @author Damaris
- */
 public abstract class Question {
     
     /**
-     * Attributes of class
+     * Fields of class
      */
-    private String questionID;
-    private int chapterNumber;
+    private String questionID; //unique TODO
+    private int chapterNumber; 
     private String questionText;
     
     /**
-     * Functions of class
+     * Methods of class
      */
     
     /**
