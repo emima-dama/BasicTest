@@ -77,10 +77,13 @@ public class Test implements QuestionFinder{
         
         int currentQuestion = 1;
         
-        System.out.print("The test will start in 2 secounds!\nGood luck :)\n");   
+        System.out.println("Welcome to your test.\n" +
+                "The test will have 5 questions.\n"+
+                "You may hit 'q' to quit the test any time, but progress or results will not be saved.\n" +
+                "Starting your test now ...");   
         try
         {
-            Thread.sleep(2000);  //delay of 2 secounds
+            Thread.sleep(1000);  //delay of 1 secounds
         }
         catch(InterruptedException ex)
         {
@@ -90,19 +93,18 @@ public class Test implements QuestionFinder{
         for(Question q:this.questions){
             
             while(true){ //repeate the question while the answer is not allowed
-                System.out.println("\nQuestion "+currentQuestion);
+                System.out.println("\nQuestion "+currentQuestion+":");
                 System.out.println(q.getQuestionText());
                 System.out.println("Answers are:");
                 
                 if(q instanceof MultipleChoiceQuestion){
                     MultipleChoiceQuestion mcq = (MultipleChoiceQuestion)q;
                     String[] answers = mcq.getAnswers();
-                    System.out.println("    a) " + answers[0] + "\n"+
-                                        "   b) " + answers[1] + "\n"+
-                                        "   c) " + answers[2] + "\n"+
-                                        "   d) " + answers[3] + "\n");
-                    System.out.println("If you what to exit the test, press 'q' (the answers will not be saved)");
-                    System.out.println("\nEnter your answer (a/b/c/d/q): ");
+                    System.out.println(" (a) " + answers[0] + "\n"+
+                                        " (b) " + answers[1] + "\n"+
+                                        " (c) " + answers[2] + "\n"+
+                                        " (d) " + answers[3] + "\n");
+                    System.out.print("\nEnter your answer: ");
                     
                     Scanner scanner = new Scanner(new InputStreamReader(System.in));
                     char answer = scanner.next().charAt(0);
@@ -115,10 +117,10 @@ public class Test implements QuestionFinder{
                         mcq.setChosenAnswer(answer);
                         //Give the feedback
                         if(mcq.isAnswerCorrect()){
-                            System.out.println("Good job! Your answer is correct :)");
+                            System.out.println("Feedback: Correct!");
                         }
                         else{
-                            System.out.println("You needed to pay attention :( The correct answer was "+mcq.getCorrectAnswer()+"\nNo "+mcq.getChosenAnswer());
+                            System.out.println("Feedback: Incorrect. Correct answer was ("+mcq.getCorrectAnswer()+")");
                         }
                         currentQuestion++; //next question
                         break; //exit from while loop
@@ -127,35 +129,45 @@ public class Test implements QuestionFinder{
                     
                 }else{ // q is an instance of TrueFalseQuestion
                     TrueFalseQuestion tfq = (TrueFalseQuestion)q;
-                    System.out.println("    true \n or \n    false \n");
-                    System.out.println("If you what to exit the test, press q (the answers will not be saved)");
-                    System.out.println("\nEnter your answer (true/false/q): ");
+                    System.out.println("  (a) True\n  (b) False");
+                    System.out.print("\nEnter your answer: ");
                     
                     Scanner scanner = new Scanner(new InputStreamReader(System.in));
                     String answer = scanner.next().toLowerCase();
                     if (answer.equals("q")){
-                        this.questions.clear(); //remove the test !TODO! I don't know if is correct
+                        this.questions.clear(); //remove the test
                         return false;
                     }
-                    if(answer.equals("true") || answer.equals("false")){
+                    boolean allowed = false;
+                    boolean answerTF = false;
+                    if(answer.equals("a")){
+                        answerTF = true;
+                        allowed = true; //the user type allowed answer
+                    }else if(answer.equals("b")){
+                        allowed = true; //the user type allowed answer
+                    }
+                    
+                    if(!allowed){
+                        System.out.print("\n! PLEASE ENTER ONE OF THE ANSWERS a, b, q !");
+                    }else{ 
                         //save the answer
-                        tfq.setChosenAnswer(Boolean.getBoolean(answer));
+                        tfq.setChosenAnswer(answerTF);
                         //Give the feedback
                         if(tfq.isAnswerCorrect()){
-                            System.out.println("Good job! Your answer is correct :)");
+                            System.out.println("Feedback: Correct!");
                         }
                         else{
-                            System.out.println("You needed to pay attention :( The correct answer was "+tfq.getCorrectAnswer()+"\nNo "+tfq.getChosenAnswer());
+                            System.out.println("Feedback: Incorrect. Correct answer was ("+tfq.getCorrectAnswer()+")");
                         }
                         currentQuestion++; //next question
                         break; //exit from while loop
                     }
-                    System.out.print("\n! PLEASE ENTER ONE OF THE ANSWERS true, false, q !");
-                    
+
                 }
             }    
         }
         
+        System.out.println("\nTest is finished");
         return true; //the Test is finished
     }
     
@@ -170,7 +182,7 @@ public class Test implements QuestionFinder{
         
         System.out.printf("\nYou answered %d questions correctly ot of %d",correctQuestions,this.questions.size());
         float score = (correctQuestions*100)/this.questions.size();
-        System.out.print("\nYour score was " + score + "%");
+        System.out.println("\nYour score was " + score + "%");
     }
     
     public void saveTestResult(){
@@ -205,7 +217,7 @@ public class Test implements QuestionFinder{
             
             bw.newLine();
             bw.write(resultFileName);
-            System.out.println("\nTest record added to test-summary.txt.");
+            System.out.println("Test record added to test-summary.txt.");
         }catch(IOException e){
             e.printStackTrace();
         }

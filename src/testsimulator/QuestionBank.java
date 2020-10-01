@@ -67,10 +67,9 @@ public class QuestionBank implements QuestionFinder{
                 
                 String [] fields = line.split(",");
                 if(fields.length != this.MULTIPLE_CHOICE_FIELDS)
-                    throw new IOException("On current line number of fields is not 8 as is necessary");
+                    throw new Exception("One of the lines from "+this.MULTIPLE_CHOICE_FILE+" file has incorrect number of fields (need to be 8)");
                 
                 //convert fields to correct type:
-                
                 //convert "cn" variable to int
                 int cn;
                 cn = Integer.parseInt(fields[1]); //chapterNumber field was not numeric throws NumberFormatError
@@ -84,18 +83,18 @@ public class QuestionBank implements QuestionFinder{
                     }
                 }
                 if (!exists){ //if chapterNumber field was not one of the allowed chapter numbers
-                    throw new NumberFormatException("The chapterNumber field need to be one of numbers: 8,9,10,11,13,14,15,16");
+                    throw new Exception("The chapterNumber field need to be one of numbers: 8,9,10,11,13,14,15,16\nNOT: "+cn+" that is in file "+this.MULTIPLE_CHOICE_FILE);
                 }                    
                 
                 //change to lowercase for consistency and convert "ca" variable to char
                 char ca = fields[7].toLowerCase().charAt(0); //change to lowercase for consistency
                 if(!(ca == 'a') && !(ca  == 'b') && !(ca == 'c') && !(ca == 'd')){
-                    throw new Exception("The correctAnswer field need to be one of 'a' to 'd'");
+                    throw new Exception("The correctAnswer field need to be one of 'a' to 'd'\nNOT: "+ ca);
                 }
                 
                 //verify if quiestionID is duplicate
                 if(this.containsQuestion(fields[0], this.questions)){
-                    throw new Exception("The questionID field is already exists in list of questions");
+                    throw new Exception("The questionID "+fields[0]+" is already exists in list of questions");
                 }
                 
                 //MultipleChoiceQuestion(String questionID, int chapterNumber, String questionText, String answer1, String answer2, String answer3, String answer4, char correctAnswer)
@@ -104,12 +103,19 @@ public class QuestionBank implements QuestionFinder{
                 
                 line = br.readLine();
             }
-        }catch(IOException e){
-            e.printStackTrace();
-        }catch(NumberFormatException e){
-            e.printStackTrace();
+        }catch(IOException e){ //when the file cannot be open 
+            System.out.println(">>>>> ERROR <<<<<");
+            System.out.println("The file "+this.MULTIPLE_CHOICE_FILE+" cannot be open\n"+e.getMessage());
+            System.exit(0); //exit the program
+        }catch(NumberFormatException e){ // when chapterNumber field is not numeric
+            System.out.println(">>>>> ERROR <<<<<");
+            System.out.println("One of the chapter numbers from "+this.TRUE_FALSE_FILE+" file is not numeric");
+            System.out.println("("+e.getMessage()+")");
+            System.exit(0); //exit the program
         }catch(Exception e){
-            e.printStackTrace();
+            System.out.println(">>>>> ERROR <<<<<");
+            System.out.println(e.getMessage());
+            System.exit(0); //exit the program
         }
     }
     
@@ -122,7 +128,7 @@ public class QuestionBank implements QuestionFinder{
                 
                 String [] fields = line.split(",");
                 if(fields.length != this.TRUE_FALSE_FIELDS)
-                    throw new IOException("On current line number of fields is not 4 as is necessary");
+                    throw new Exception("One of the lines from "+this.TRUE_FALSE_FILE+" file has incorrect number of fields (need to be 4)");
                 
                 //convert "cn" variable to int
                 int cn;
@@ -137,16 +143,19 @@ public class QuestionBank implements QuestionFinder{
                     }
                 }
                 if (!exists){ //if chapterNumber field was not one of the allowed chapter numbers
-                    throw new NumberFormatException("The chapterNumber field need to be one of numbers: 8,9,10,11,13,14,15,16");
+                    throw new Exception("The chapterNumber field need to be one of numbers: 8,9,10,11,13,14,15,16\nNOT: "+cn+" that is in file "+this.TRUE_FALSE_FILE);
                 }                    
                 
+                if(!(fields[3].toLowerCase().equals("true") || fields[3].toLowerCase().equals("false"))){
+                        throw new Exception("The correctAnswer field need to be \"true\" or \"false\"\n NOT: "+fields[3]);
+                }
                 //change to lowercase for consistency and convert "ca" variable to boolean
                 boolean ca = Boolean.parseBoolean(fields[3].toLowerCase());
                 //TODO check if throw error if is not true/false
                 
                 //verify if quiestionID is duplicate
                 if(this.containsQuestion(fields[0], this.questions)){
-                    throw new Exception("The questionID field is already exists in list of questions");
+                    throw new Exception("The questionID "+fields[0]+" is already exists in list of questions");
                 }
                 
                 //MultipleChoiceQuestion(String questionID, int chapterNumber, String questionText, String answer1, String answer2, String answer3, String answer4, char correctAnswer)
@@ -156,11 +165,18 @@ public class QuestionBank implements QuestionFinder{
                 line = br.readLine();
             }
         }catch(IOException e){
-            e.printStackTrace();
+            System.out.println(">>>>> ERROR <<<<<");
+            System.out.println("The file "+this.TRUE_FALSE_FILE+" cannot be open\n"+e.getMessage());
+            System.exit(0); //exit the program
         }catch(NumberFormatException e){
-            e.printStackTrace();
+            System.out.println(">>>>> ERROR <<<<<");
+            System.out.println("One of the chapter numbers from "+this.TRUE_FALSE_FILE+" file is not numeric");
+            System.out.println("("+e.getMessage()+")");
+            System.exit(0); //exit the program
         }catch(Exception e){
-            e.printStackTrace();
+            System.out.println(">>>>> ERROR <<<<<");
+            System.out.println(e.getMessage());
+            System.exit(0); //exit the program
         }
     }
 

@@ -50,15 +50,16 @@ public class TestSimulator {
     public static void main(String[] args) {
         
         QuestionBank qb = new QuestionBank();
-        
+  
         while(true){
             
             int selection = getSelection();
-            if(selection == 3)
+            if(selection == 3){
+                System.out.println();
+                System.out.println("Thank you for using TestSimulator!");
                 break;
-                     
-            System.out.print("Your selection is "+selection);
-            
+            }
+                
             if(selection == 1){
                 //create a Test
                 Test test = new Test(5,qb);
@@ -68,6 +69,12 @@ public class TestSimulator {
                 }
                 
             }
+            else{ //selection is 2
+                TestSummary ts = new TestSummary();
+                ts.summarisePerformance();
+                ts.reportPerformance();
+            }
+            
         }
     }
     
