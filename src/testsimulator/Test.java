@@ -44,7 +44,14 @@ public class Test implements QuestionFinder{
         return this.questions.size();
     }
     
-    //TODO : what's the type of return? In UML diagram doesn't occur
+    /**
+     * 
+     * @param numQuestions
+     * @param questionBank 
+     * 
+     * Randomly selects the appropriate number of questions from the question bank to be
+     *   the test. Avoids duplicates.
+     */
     private void selectQuestions(int numQuestions, QuestionBank questionBank){
         
         int sizeOfSelection = 0;
@@ -73,6 +80,14 @@ public class Test implements QuestionFinder{
         }
     }
 
+    /**
+     * Runs the test 
+     * Reprompts for invalid answers.
+     * Allows quitting any time with ‘q’. Progress and results will not be saved.
+     * Gives instantaneous feedback after each question
+     * @return true -> test is done
+     *         false -> test is removed without ending 
+     */
     public boolean runTest(){
         
         int currentQuestion = 1;
@@ -171,6 +186,9 @@ public class Test implements QuestionFinder{
         return true; //the Test is finished
     }
     
+    /**
+     * Prints a short summary of performance for the current test
+     */
     public void showTestSummary(){
         
         int correctQuestions = 0;
@@ -185,15 +203,24 @@ public class Test implements QuestionFinder{
         System.out.println("\nYour score was " + score + "%");
     }
     
+    /**
+     * Saves results in two files: 
+     *      Test result file: test-yymmdd-hhmmss.txt (where yymmdd-hhmmss is the current date and time).
+     *      Test summary file: test-summary.txt
+     * The test result file uses the following format (one question per line):
+     *      questionID,chapterNumber,correctAnswer,chosenAnswer
+     * The test summary file stores the names of all previous test result files
+     * All files are saved at the top level of your NetBeans project. This is the default location.
+     * Prints a specific message on success
+     */
     public void saveTestResult(){
         
         //Test result file
         SimpleDateFormat formatter = new SimpleDateFormat("yyMMdd-HHmmss");
         Date now = new Date();
         String resultFileName = "test-"+formatter.format(now)+".txt";
-        //create the file
-
-        //write to the file
+        
+        //create and write to the file
         try(BufferedWriter bw = new BufferedWriter(new FileWriter(resultFileName))){
             for(Question q: this.questions){
                 if(q instanceof MultipleChoiceQuestion){
@@ -211,7 +238,6 @@ public class Test implements QuestionFinder{
             e.printStackTrace();
         }
         
-        //TODO
         //the summary file
         try(BufferedWriter bw = new BufferedWriter(new FileWriter("test-summary.txt",true))){ //If the file exists, append to it
             

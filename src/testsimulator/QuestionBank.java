@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class QuestionBank implements QuestionFinder{
     
     /**
-     * Fields of class
+     * Fields of the class
      */
     public static int[] CHAPTERS = new int[]{8,9,10,11,13,14,15,16};
     private String MULTIPLE_CHOICE_FILE = "multiple-choice-questions.txt";
@@ -26,11 +26,14 @@ public class QuestionBank implements QuestionFinder{
     private ArrayList<Question> questions;
     
     /**
-     * Methods of class
+     * Methods of the class
      */
     
     /**
-     * Constructor 
+     * Constructor
+     * 
+     * Calls loadMultipleChoiceQuestions() and loadTrueFalseQuestions() helper methods.
+     * Prints a message in the form: Loaded all N questions from the question bank.
      */
     public QuestionBank(){
         
@@ -42,11 +45,20 @@ public class QuestionBank implements QuestionFinder{
         System.out.print("Loaded all "+this.getLenght()+" questions from the question bank.");
     }
     
+    /**
+     * 
+     * @return  int:  the length of the “questions” member
+     */
     public int getLenght(){
         
         return this.questions.size();
     }
     
+    /**
+     * 
+     * @param index
+     * @return Question:  at the given index
+     */
     public Question getQuestion(int index){
         
         return this.questions.get(index);
@@ -58,6 +70,9 @@ public class QuestionBank implements QuestionFinder{
         return this.questions;
     }
     
+    /**
+     * Loads the multiple-choice questions from the data file into the “questions” member
+     */
     public void loadMultipleChoiceQuestions(){
         
         try(BufferedReader br = new BufferedReader(new FileReader(this.MULTIPLE_CHOICE_FILE))){
@@ -119,6 +134,9 @@ public class QuestionBank implements QuestionFinder{
         }
     }
     
+    /**
+     * Loads the true/false questions from the data file into the “questions” member.
+     */
     public void loadTrueFalseQuestions(){
         
         try(BufferedReader br = new BufferedReader(new FileReader(this.TRUE_FALSE_FILE))){

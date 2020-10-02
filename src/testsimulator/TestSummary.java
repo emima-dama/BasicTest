@@ -12,7 +12,7 @@ import java.io.IOException;
 public class TestSummary {
     
     /**
-     * Fields of class
+     * Fields of the class
      */
     public static String FILENAME_SUMMARY = "test-summary.txt";
     private int TEST_REPORT_FIELDS = 4;
@@ -20,16 +20,21 @@ public class TestSummary {
     private int[] chapterQuestionsCorrect = new int[8];
  
     /**
-     * Methods of class
+     * Methods of the class
      */
     
     /**
-     * Constructor 
+     * Constructor of the class
      */
     public TestSummary(){
-        //TODO
+        //empty constructor
     }
     
+    /**
+     * Opens the test summary file. Opens each test report file found in turn
+     * Calculates the number of questions correct and number of questions answered for
+     *       all the chapter topics. Calculation results are stored in the corresponding class fields.
+     */
     public void summarisePerformance(){
         
         //open "test-summary.txt" file 
@@ -106,6 +111,11 @@ public class TestSummary {
         }
     }
     
+    /**
+     * Prints a summary of all test performance to screen
+     * Performance is on a chapter-by-chapter basis, plus totals at the bottom
+     * 
+     */
     public void reportPerformance(){
         
         System.out.println();
@@ -125,7 +135,7 @@ public class TestSummary {
             if(answers !=0 ){ //if exists answers
                 percent = (correctAnswers*100)/answers;
             }
-            int chapter = (i < 4) ? i+8 : i+9;
+            int chapter = (i < 4) ? i+8 : i+9; //if i<4 then chapter=i+8 else chapter=i+9
             
             sumCorrect += correctAnswers;
             sumAnswered += answers;
